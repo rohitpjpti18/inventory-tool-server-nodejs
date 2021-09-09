@@ -4,8 +4,9 @@ import helmet from 'helmet';
 import dotenv from 'dotenv';
 import requestLogger from './utilities/requestlogger';
 import errorLogger from './utilities/errorlogger';
+import userroutes from './routes/userroutes';
 
-dotenv.config();
+dotenv.config({path: __dirname + '/.env'});
 
 const PORT = 3000;
 const app: Express = express();
@@ -14,10 +15,9 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+
 app.use(requestLogger);
-app.get('/', (req: Request, res: Response, next: NextFunction)=>{
-    res.send("<h1>Hello World</h1>");
-});
+app.use('/user', userroutes);
 app.use(errorLogger);
 
 
